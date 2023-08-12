@@ -21,10 +21,12 @@ export const createJWT = (user) => {
 
 export const protect = (req, res, next) => {
     const bearer = req.headers.authorization;
+    
+    // if (req.url === "/users") return;
 
     if (!bearer) {
         res.status(401);
-        res.json({ message: 'not authorized' });
+        res.json({ message: 'Not authorized' });
         return;
     }
 
@@ -32,7 +34,7 @@ export const protect = (req, res, next) => {
 
     if (!token) {
         res.status(401);
-        res.json({ message: 'not valid token' });
+        res.json({ message: 'Not valid token' });
         return;
     }
 
@@ -43,7 +45,7 @@ export const protect = (req, res, next) => {
     } catch (e) {
         console.error(e);
         res.status(401);
-        res.json({ message: 'not valid token' });
+        res.json({ message: 'Not valid token' });
         return;
     }
 };

@@ -10,21 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id        String    @id @default(uuid())
   createdAt DateTime  @default(now())
   username  String    @unique
   password  String
-  products  Product[]
+  products  Products[]
 }
 
-model Product {
+model Products {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   name        String   @db.VarChar(255)
   belongsToId String
-  belongTo    User     @relation(fields: [belongsToId], references: [id])
-  updates     Update[]
+  belongTo    Users     @relation(fields: [belongsToId], references: [id])
+  updates     Updates[]
   @@unique([id, belongsToId])
 }
 
@@ -34,7 +34,7 @@ enum UPDATE_STATUS {
   DEPRECATED
 }
 
-model Update {
+model Updates {
   id           String        @id @default(uuid())
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt()
@@ -44,16 +44,16 @@ model Update {
   version      String?
   asset        String?
   productId    String
-  product      Product       @relation(fields: [productId], references: [id])
-  updatePoints UpdatePoint[]
+  product      Products       @relation(fields: [productId], references: [id])
+  updatePoints UpdatePoints[]
 }
 
-model UpdatePoint {
+model UpdatePoints {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now())
   updatedAt   DateTime
   name        String   @db.VarChar(255)
   description String
   updateId    String
-  update      Update   @relation(fields: [updateId], references: [id])
+  update      Updates   @relation(fields: [updateId], references: [id])
 }

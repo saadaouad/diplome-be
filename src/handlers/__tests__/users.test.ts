@@ -1,12 +1,12 @@
-import * as user from '../user';
+import * as users from '../users';
 
-describe('user handler', () => {
-    it('should create a new user', async () => {
+describe('User handler', () => {
+    it('Should create a new user', async () => {
         const req = { body: { username: 'Saad', password: 'admin' } };
         const res = { json({ token }) {
             expect(token).toBeTruthy();
         }};
 
-        await user.createNewUser(req, res, () => {});
+        await users.createNewUser(req, res, () => {});
     });
 });

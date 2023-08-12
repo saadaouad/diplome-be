@@ -5,7 +5,7 @@ export const createNewUser = async (req, res, next) => {
     try {
         const hash = await hashPassword(req?.body?.password);
 
-        const user = await prisma.user.create({
+        const user = await prisma.users.create({
             data: {
                 username: req.body.username,
                 password: hash,
@@ -21,7 +21,7 @@ export const createNewUser = async (req, res, next) => {
 };
 
 export const signin = async (req, res) => {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
         where: { username: req.body.username },
     });
 
@@ -29,7 +29,7 @@ export const signin = async (req, res) => {
 
     if (!isValid) {
         res.status(401);
-        res.json({ message: 'nope' });
+        res.json({ message: 'Nope' });
         return;
     };
 

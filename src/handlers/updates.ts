@@ -1,7 +1,7 @@
 import prisma from '../db';
 
 export const getUpdates = async (req, res) => {
-    const products = await prisma.product.findMany({
+    const products = await prisma.products.findMany({
         where: {
             belongsToId: req.user.id
         },
@@ -20,7 +20,7 @@ export const getUpdates = async (req, res) => {
 export const getOneUpdate = async (req, res) => {
     const id = req.params.id;
 
-    const update = await prisma.update.findUnique({
+    const update = await prisma.updates.findUnique({
         where: {
             id,
         }
@@ -30,17 +30,17 @@ export const getOneUpdate = async (req, res) => {
 };
 
 export const createUpdate = async (req, res) => {
-    const product = await prisma.product.findUnique({
+    const product = await prisma.products.findUnique({
         where: {
             id: req.body.productId
         }
     });
 
     if (!product) {
-        return res.json({ message: 'nope' });
+        return res.json({ message: 'Nope' });
     }
 
-    const update = await prisma.update.create({
+    const update = await prisma.updates.create({
         data: {
             title: req.body.title,
             body: req.body.body,
@@ -52,7 +52,7 @@ export const createUpdate = async (req, res) => {
 };
 
 export const updateUpdate = async (req, res) => {
-    const products = await prisma.product.findMany({
+    const products = await prisma.products.findMany({
         where: {
             belongsToId: req.user.id
         },
@@ -68,10 +68,10 @@ export const updateUpdate = async (req, res) => {
    const match = updates.find(update => update.id === req.params.id);
 
    if (!match) {
-       return res.json({ message: 'nope' });
+       return res.json({ message: 'Nope' });
    };
 
-   const updatedUpdate = await prisma.update.update({
+   const updatedUpdate = await prisma.updates.update({
        where: {
            id: req.params.id
        },
@@ -82,7 +82,7 @@ export const updateUpdate = async (req, res) => {
 };
 
 export const deleteUpdate = async (req, res) => {
-    const products = await prisma.product.findMany({
+    const products = await prisma.products.findMany({
         where: {
             belongsToId: req.user.id
         },
@@ -98,10 +98,10 @@ export const deleteUpdate = async (req, res) => {
    const match = updates.find(update => update.id === req.params.id);
 
    if (!match) {
-       return res.json({ message: 'nope' });
+       return res.json({ message: 'Nope' });
    };
 
-   const deleted = await prisma.update.delete({
+   const deleted = await prisma.updates.delete({
        where: {
            id: req.params.id
        }

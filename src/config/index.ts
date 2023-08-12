@@ -10,7 +10,7 @@ if (stage === "production") {
 } else if (stage === "testing") {
     envConfig = require("./testing").default;
 } else {
-    envConfig = require('./dev').default;
+    envConfig = require('./local').default;
 };
 
 export default merge({

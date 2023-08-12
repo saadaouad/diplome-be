@@ -1,7 +1,7 @@
 import prisma from '../db';
 
 export const getProducts = async (req, res) => {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
         where: {
             id: req.user.id
         },
@@ -16,7 +16,7 @@ export const getProducts = async (req, res) => {
 export const getOneProduct = async (req, res) => {
     const id = req.params.id;
 
-    const product = await prisma.product.findFirst({
+    const product = await prisma.products.findFirst({
         where: {
             id,
             belongsToId: req.user.id,
@@ -28,7 +28,7 @@ export const getOneProduct = async (req, res) => {
 
 export const createProduct = async (req, res, next) => {
     try {
-        const product = await prisma.product.create({
+        const product = await prisma.products.create({
             data: {
                 name: req.body.name,
                 belongsToId: req.user.id,
@@ -42,7 +42,7 @@ export const createProduct = async (req, res, next) => {
 };
 
 export const updateProduct = async (req, res) => {
-    const updated = await prisma.product.update({
+    const updated = await prisma.products.update({
         where: {
             id: req.params.id,
         },
@@ -55,7 +55,7 @@ export const updateProduct = async (req, res) => {
 };
 
 export const deleteProduct = async (req, res) => {
-    const deleted = await prisma.product.delete({
+    const deleted = await prisma.products.delete({
         where: {
             id_belongsToId: {
                 id: req.params.id,

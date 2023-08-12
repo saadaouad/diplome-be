@@ -2,9 +2,11 @@ import cors from 'cors'
 import express from 'express';
 import morgan from 'morgan';
 
-import router from './router';
 import { protect } from './modules/auth';
-import { createNewUser, signin } from './handlers/user';
+import users from './routes/users';
+import products from './routes/products';
+import updates from './routes/updates';
+import updatePoints from './routes/updatePoints';
 
 const app = express();
 
@@ -14,21 +16,21 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 app.get('/', (req, res, next) => {
-    res.json({ message: 'hello' });
+    res.json({ message: 'Hello' });
 });
 
-app.use('/api', protect, router);
-
-app.post('/user', createNewUser);
-app.post('/signin', signin);
+app.use('/api', users);
+app.use('/api', protect, products);
+app.use('/api', protect, updates);
+app.use('/api', protect, updatePoints);
 
 app.use((err, req, res, next) => {
     if (err.type === 'auth') {
-        res.status(401).json({ message: 'unauthorized' });
+        res.status(401).json({ message: 'Unauthorized' });
     } else if (err.type === 'input') {
-        res.status(400).json({ message: 'invalid input' });
+        res.status(400).json({ message: 'Invalid input' });
     } else {
-        res.status(500).json({ message: 'oops, thats on us' });
+        res.status(500).json({ message: 'Oops, thats on us' });
     }
 });
 
